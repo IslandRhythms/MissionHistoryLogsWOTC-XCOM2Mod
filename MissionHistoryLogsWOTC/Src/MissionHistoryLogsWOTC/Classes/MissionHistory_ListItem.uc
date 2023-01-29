@@ -6,10 +6,11 @@ var MissionHistoryLogsDetails Datum;
 
 var UIBGBox BorderBox;
 
-simulated function RefreshHistory(MissionHistoryLogsDetails UpdateData) {
+simulated function MissionHistory_ListItem RefreshHistory(MissionHistoryLogsDetails UpdateData) {
 	InitPanel();
 	Datum = UpdateData;
 	FillTable();
+	return self;
 }
 
 simulated function SetHighlighted(bool IsHighlighted)
