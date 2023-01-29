@@ -441,10 +441,13 @@ simulated function OpenMemorialDetail(MissionHistory_ListItem icon)
 	DialogData.eType = eDialog_Normal;
 	DialogData.strTitle = Data.MissionName;
 	DialogData.strAccept = class'UIDialogueBox'.default.m_strDefaultAcceptLabel;
-	StrDetails = "Troops Deployed:"@Data.NumSoldiersDeployed;
+	StrDetails = "Objective:"@Data.MissionObjective;
+	StrDetails = StrDetails $ "Intel received from"@Data.QuestGiver;
+	StrDetails = StrDetails $ "Troops Deployed:"@Data.NumSoldiersDeployed;
 	StrDetails = StrDetails $ "\nTroops Injured:"@Data.NumSoldiersInjured;
 	StrDetails = StrDetails $ "\nTroops MIA:" @ Data.NumSoldiersMIA;
 	StrDetails = StrDetails $ "\nTroops Killed:" @ Data.NumSoldiersKilled;
+	StrDetails = StrDetails $ "At"@Data.MissionLocation;
 	StrDetails = StrDetails $ "\nOn Map:" @ Data.MapName;
 	if (Data.Enemies != "Advent") {
 		StrDetails = StrDetails $ "\nAgainst Chosen:" @ Data.Enemies;
@@ -468,8 +471,8 @@ simulated function OpenMemorialDetail(MissionHistory_ListItem icon)
 		}
 	}
 	DialogData.strText = StrDetails;
-	DialogData.strImagePath = class'UIUtilities_Image'.static.ValidateImagePath(Data.ObjectiveImagePath);
-
+	DialogData.strImagePath = class'UIUtilities_Image'.static.ValidateImagePath("img:///"$Data.MapImagePath);
+	// DialogData.strImagePath = class'UIUtilities_Image'.static.ValidateImagePath(Data.ObjectiveImagePath); // this ui does not allow two images
 	Movie.Pres.UIRaiseDialog( DialogData );
 }
 
