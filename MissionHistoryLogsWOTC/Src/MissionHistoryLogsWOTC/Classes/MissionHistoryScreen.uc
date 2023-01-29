@@ -56,10 +56,10 @@ simulated function CreateSortHeaders()
 	Spawn(class'UIPanel', self).InitPanel('personnelSort', 'PersonnelSortHeader').Hide();
 
 	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("nameButton", eGM_SortMissionName, "Operation Name");
-	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("killsButton", eGM_SortSquad, "Squad");
-	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("missionsButton", eGM_SortDate, "Date");
 	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("operationButton", eGM_SortRating, "Rating");
-	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("dateButton", eGM_SortRate, "Current Success Rate");
+	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("missionsButton", eGM_SortDate, "Date");
+	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("killsButton", eGM_SortSquad, "Squad");
+	Spawn(class'UIFlipSortButton', m_kDeceasedSortHeader).InitFlipSortButton("dateButton", eGM_SortRate, "Win Rate");
 	m_kDeceasedSortHeader.Show();
 }
 
@@ -173,12 +173,12 @@ simulated function OpenMemorialDetail(MissionHistory_ListItem icon)
 	DialogData.strTitle = Data.MissionName;
 	DialogData.strAccept = class'UIDialogueBox'.default.m_strDefaultAcceptLabel;
 	StrDetails = "Objective:"@Data.MissionObjective;
-	StrDetails = StrDetails $ "Intel received from"@Data.QuestGiver;
-	StrDetails = StrDetails $ "Troops Deployed:"@Data.NumSoldiersDeployed;
+	StrDetails = StrDetails $ "\nIntel received from"@Data.QuestGiver;
+	StrDetails = StrDetails $ "\nTroops Deployed:"@Data.NumSoldiersDeployed;
 	StrDetails = StrDetails $ "\nTroops Injured:"@Data.NumSoldiersInjured;
 	StrDetails = StrDetails $ "\nTroops MIA:" @ Data.NumSoldiersMIA;
 	StrDetails = StrDetails $ "\nTroops Killed:" @ Data.NumSoldiersKilled;
-	StrDetails = StrDetails $ "At"@Data.MissionLocation;
+	StrDetails = StrDetails $ "\nAt"@Data.MissionLocation;
 	StrDetails = StrDetails $ "\nOn Map:" @ Data.MapName;
 	if (Data.Enemies != "Advent") {
 		StrDetails = StrDetails $ "\nAgainst Chosen:" @ Data.Enemies;

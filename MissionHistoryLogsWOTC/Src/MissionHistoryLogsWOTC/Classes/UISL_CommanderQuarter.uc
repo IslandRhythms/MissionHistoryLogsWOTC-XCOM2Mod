@@ -127,8 +127,10 @@ static function OnButtonClicked()
 	{
 		MHS = `HQPRES.Spawn(class'MissionHistoryScreen',`HQPRES);
         // MHS.InitProcess();
-		MHS.InitMemorial();
+		// MHS.InitMemorial();
         `HQPRES.ScreenStack.Push(MHS);
+		// maybe after?
+		MHS.InitMemorial();
 	}
 
 }
