@@ -23,10 +23,16 @@ simulated function SetHighlighted(bool IsHighlighted)
 }
 
 simulated function FillTable() {
+	local string shorten;
 	MC.BeginFunctionOp("UpdateData");
 	
 	MC.QueueString(Datum.MissionName);		// Mission
-	MC.QueueString(Datum.SquadName);	// Squad
+	if (Len(Datum.SquadName) > 8) {
+		shorten = Left(Datum.SquadName, 8);
+		MC.QueueString(shorten);
+	} else {
+		MC.QueueString(Datum.SquadName);	// Squad
+	}
 	MC.QueueString(Datum.Date);			// Date
 	MC.QueueString(Datum.MissionRating);				// Rating
 	MC.QueueString(Datum.SuccessRate);			// Rate

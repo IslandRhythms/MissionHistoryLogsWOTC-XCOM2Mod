@@ -50,6 +50,8 @@ var array<MissionHistoryLogsDetails> TableData;
 // fireaxis why
 var array<ChosenInformation> TheChosen;
 
+var localized string squadLabel;
+
 
 function UpdateTableData() {
 	local int injured, captured, killed, total, Index, CampaignIndex, MapIndex;
@@ -97,18 +99,13 @@ function UpdateTableData() {
 	CampaignSettingsStateObject = XComGameState_CampaignSettings(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_CampaignSettings', true));
 	CampaignIndex = CampaignSettingsStateObject.GameIndex;
 	MissionDetails = XComGameState_MissionSite(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_MissionSite', true));
+	ItemData.SquadName = default.squadLabel;
 	if(IsModActive('SquadManager')) {
 		SquadMgr = XComGameState_LWSquadManager(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_LWSquadManager', true));
 		Squad = XComGameState_LWPersistentSquad(`XCOMHISTORY.GetGameStateForObjectID(SquadMgr.LastMissionSquad.ObjectID));
 		if (Squad.sSquadName != "") {
 			ItemData.SquadName = Squad.sSquadName;
-		} else {
-			ItemData.SquadName = "XCOM"; // Squad name for Operation Gatecrasher
 		}
-	} else {
-		// can also take approach of listing Unit nicknames that were on the mission.
-		// we'll do this for now.
-		ItemData.SquadName = "XCOM";
 	}
 	AlienHQ = XComGameState_HeadquartersAlien(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_HeadquartersAlien', true));
 	Faction = XComGameState_ResistanceFaction(`XCOMHISTORY.GetGameStateForObjectID(MissionDetails.ResistanceFaction.ObjectID));
