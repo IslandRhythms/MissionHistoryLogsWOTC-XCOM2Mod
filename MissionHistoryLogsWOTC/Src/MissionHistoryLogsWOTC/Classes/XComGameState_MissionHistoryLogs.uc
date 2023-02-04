@@ -100,7 +100,7 @@ function UpdateTableData() {
 	CampaignIndex = CampaignSettingsStateObject.GameIndex;
 	MissionDetails = XComGameState_MissionSite(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_MissionSite', true));
 	ItemData.SquadName = default.squadLabel;
-	if(IsModActive('SquadManager')) {
+	if(IsModActive('SquadManager') || IsModActive('LongWarOfTheChosen')) {
 		SquadMgr = XComGameState_LWSquadManager(`XCOMHISTORY.GetSingleGameStateObjectForClass(class'XComGameState_LWSquadManager', true));
 		Squad = XComGameState_LWPersistentSquad(`XCOMHISTORY.GetGameStateForObjectID(SquadMgr.LastMissionSquad.ObjectID));
 		if (Squad.sSquadName != "") {
@@ -138,14 +138,16 @@ function UpdateTableData() {
 		}
 	}
 	// we need to keep track of when the chosen is encountered because any variable that could help us do this is only valid in the tactical layer.
-	// for some reason when it gets to strategy, any variable that could help us determine if the chosen was on the most recent mission gets wiped.
+	// for some reason when it gets to strategy, any variable that could help us determine if the chosen was on the most recent mission gets wiped
 	if (BattleData.ChosenRef.ObjectID == 0) {
 		ItemData.Enemies = "Advent";
 	} else {
 		ChosenState = XComGameState_AdventChosen(`XCOMHISTORY.GetGameStateForObjectID(BattleData.ChosenRef.ObjectID));
 		ChosenName = ChosenState.FirstName $ " " $ ChosenState.NickName $ " " $ ChosenState.LastName;
+		Index = TheChosen.Find('ChosenName', ChosenName);
 		// if we are checking that they weren't on the last mission, then this number should increase correctly.
-		if (ChosenState.NumEncounters == 1) {
+		// what if this is installed mid campaign?
+		if (ChosenState.NumEncounters == 1 || Index == -1) {
 			MiniBoss.ChosenType = string(ChosenState.GetMyTemplateName());
 			MiniBoss.ChosenType = Split(MiniBoss.ChosenType, "_", true);
 			MiniBoss.ChosenName = ChosenState.FirstName $ " " $ ChosenState.NickName $ " " $ ChosenState.LastName;
@@ -162,20 +164,16 @@ function UpdateTableData() {
 			ItemData.WinPercentageAgainstChosen = MiniBoss.NumDefeats / MiniBoss.NumEncounters;
 			`log("Win Percentage is"@ItemData.WinPercentageAgainstChosen);
 		} else {
-			for (Index = 0; Index < TheChosen.Length; Index++) {
-				ChosenName = ChosenState.FirstName $ " " $ ChosenState.NickName $ " " $ ChosenState.LastName;
-				if (TheChosen[Index].ChosenName == ChosenName && TheChosen[Index].NumEncounters != ChosenState.NumEncounters) {
-					TheChosen[Index].NumEncounters = float(ChosenState.NumEncounters);
-					if(BattleData.bChosenLost) {
-						`log("the chosen was defeated this mission");
-						TheChosen[Index].NumDefeats += 1.0;
-					}
-					ItemData.ChosenName = ChosenState.FirstName $ " " $ ChosenState.NickName $ " " $ ChosenState.LastName;
-					ItemData.Enemies = TheChosen[Index].ChosenType;
-					ItemData.NumChosenEncounters = TheChosen[Index].NumEncounters;
-					ItemData.WinPercentageAgainstChosen = TheChosen[Index].NumDefeats / TheChosen[Index].NumEncounters;
-					break;
+			if (TheChosen[Index].NumEncounters != ChosenState.NumEncounters) {
+				TheChosen[Index].NumEncounters = float(ChosenState.NumEncounters);
+				if(BattleData.bChosenLost) {
+					`log("the chosen was defeated this mission");
+					TheChosen[Index].NumDefeats += 1.0;
 				}
+				ItemData.ChosenName = ChosenName;
+				ItemData.Enemies = TheChosen[Index].ChosenType;
+				ItemData.NumChosenEncounters = TheChosen[Index].NumEncounters;
+				ItemData.WinPercentageAgainstChosen = TheChosen[Index].NumDefeats / TheChosen[Index].NumEncounters;
 			}
 		}
 	}
