@@ -7,4 +7,6 @@ so even if you go over it will prevent the bleed.
 
 You can also thank Rusty for the CTD fix on Ongoing campaigns.
 
+Also, this should support LWOTC. Let me know if it doesn't.
+
 If you want to say more than thank you, feel free to [url=https://www.buymeacoffee.com/TheIslandRhythm]Buy me an apple[/url]
