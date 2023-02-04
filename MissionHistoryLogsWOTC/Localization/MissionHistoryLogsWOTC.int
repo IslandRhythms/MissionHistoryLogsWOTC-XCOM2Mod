@@ -19,4 +19,4 @@ labels[3]="Mission Rating"
 labels[4]="Current Success Rate"
 
 [XComGameState_MissionHistoryLogs]
-squadLabel = "abcdefghijklmnopqrstuvwxyz"
+squadLabel = "XCOM"
