@@ -7,6 +7,8 @@ so even if you go over it will prevent the bleed.
 
 You can also thank Rusty for the CTD fix on Ongoing campaigns.
 
-LWOTC Support causes crash, so unable to implement.
+If you have LWOTC installed, do not download the squad manager.
+
+If you install mid-campaign, do not open the log screen until you have completed 1 mission.
 
 If you want to say more than thank you, feel free to [url=https://www.buymeacoffee.com/TheIslandRhythm]Buy me an apple[/url]
