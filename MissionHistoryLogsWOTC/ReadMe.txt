@@ -7,7 +7,7 @@ so even if you go over it will prevent the bleed.
 
 You can also thank Rusty for the CTD fix on Ongoing campaigns.
 
-If you have LWOTC installed, do not download the squad manager.
+This mod is not LWOTC compatible.
 
 If you install mid-campaign, do not open the log screen until you have completed 1 mission.
 
